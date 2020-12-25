@@ -3,17 +3,15 @@
 import json
 import requests
 import os
+import pandas as pd
 
 def merge_dicts(dict1,dict2):
     dico = {}
     for x in dict1.keys():
-        dico[x] = []
-        if (type(dict1[x]) is list):
-            dico[x].extend(dict1[x])
-            dico[x].extend(dict2[x])
-        else:
-            dico[x].append(dict1[x])
-            dico[x].append(dict2[x])
+        dico[x]= []
+        dico[x].extend(dict1[x])
+        dico[x].extend(dict2[x])
+
     return dico
 
 
@@ -76,3 +74,8 @@ def extract_salary(data) :
     data["salaire"].fillna(0, inplace=True)
     return data.query('salaire != 0') ##renvoie uniquement les ligne qui possèdent une information sur le salaire
 
+def read_json(filename) :
+    with open("data/" + filename, "r") as file:
+        data = json.load(file)
+        file.close()
+    return data
